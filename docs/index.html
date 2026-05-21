@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Analise visual do dataset Video Game Sales com foco em vendas globais, plataformas, generos, publicadoras e perfil regional.">
-    <title>Video Game Sales | GitHub Pages</title>
+        content="Analise de Video Game Sales com 9 perguntas respondidas por meio de graficos e interpretacoes curtas.">
+    <title>Video Game Sales | Perguntas e Graficos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,14 +18,14 @@
             --bg: #f4eee6;
             --bg-strong: #efe3d4;
             --surface: rgba(255, 252, 247, 0.84);
-            --surface-strong: #fffaf3;
+            --surface-strong: #fffdf9;
             --ink: #162225;
             --muted: #5c676d;
             --line: rgba(22, 34, 37, 0.08);
             --teal: #0f766e;
             --teal-soft: #ccfbf1;
             --orange: #d97706;
-            --gold: #f4b740;
+            --orange-soft: #ffedd5;
             --rose: #e76f51;
             --blue: #1d4ed8;
             --shadow: 0 24px 60px rgba(34, 35, 33, 0.11);
@@ -79,7 +79,7 @@
             gap: 10px;
             padding: 10px 16px;
             border-radius: 999px;
-            background: rgba(255, 250, 243, 0.74);
+            background: rgba(255, 250, 243, 0.78);
             border: 1px solid rgba(22, 34, 37, 0.1);
             color: var(--muted);
             font-size: 0.9rem;
@@ -115,15 +115,15 @@
             position: absolute;
             right: -40px;
             bottom: -40px;
-            width: 220px;
-            height: 220px;
-            background: radial-gradient(circle, rgba(244, 183, 64, 0.32), transparent 70%);
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle, rgba(231, 111, 81, 0.26), transparent 70%);
             border-radius: 50%;
         }
 
         .hero-title {
             margin: 18px 0 16px;
-            font-size: clamp(2.8rem, 4vw, 4.8rem);
+            font-size: clamp(2.7rem, 4vw, 4.8rem);
             line-height: 0.95;
             letter-spacing: -0.05em;
         }
@@ -132,7 +132,7 @@
             margin: 0;
             max-width: 60ch;
             font-family: "Source Serif 4", serif;
-            font-size: 1.28rem;
+            font-size: 1.24rem;
             line-height: 1.6;
             color: #324246;
         }
@@ -192,11 +192,17 @@
             gap: 14px;
         }
 
+        .metric-card,
+        .fact-card,
+        .chart-card,
+        .method-card {
+            border-radius: 24px;
+            background: var(--surface-strong);
+            border: 1px solid rgba(22, 34, 37, 0.08);
+        }
+
         .metric-card {
             padding: 18px;
-            border-radius: 22px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 250, 243, 0.92));
-            border: 1px solid rgba(22, 34, 37, 0.06);
         }
 
         .metric-label {
@@ -227,10 +233,6 @@
         }
 
         .section-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            gap: 16px;
             margin-bottom: 18px;
         }
 
@@ -266,9 +268,6 @@
 
         .fact-card {
             padding: 20px;
-            border-radius: 24px;
-            background: var(--surface-strong);
-            border: 1px solid rgba(22, 34, 37, 0.08);
         }
 
         .fact-card strong {
@@ -291,15 +290,26 @@
         }
 
         .chart-card {
-            background: #fffdf9;
-            border: 1px solid rgba(22, 34, 37, 0.08);
-            border-radius: 26px;
             padding: 22px;
             min-height: 360px;
         }
 
         .chart-card.large {
             grid-column: span 2;
+        }
+
+        .question-id {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--orange-soft);
+            color: var(--orange);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
         .chart-card h3 {
@@ -331,9 +341,6 @@
 
         .method-card {
             padding: 22px;
-            border-radius: 24px;
-            background: #fffdf9;
-            border: 1px solid rgba(22, 34, 37, 0.08);
         }
 
         .method-card ul {
@@ -410,7 +417,7 @@
             }
 
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.45rem;
             }
         }
     </style>
@@ -420,12 +427,12 @@
     <div class="page">
         <header class="hero">
             <section class="hero-copy">
-                <span class="pill">GitHub Pages | Ciencia de Dados</span>
+                <span class="pill">GitHub Pages | 9 perguntas visuais</span>
                 <h1 class="hero-title">Video Game Sales</h1>
                 <p class="hero-subtitle">
-                    Uma pagina feita para transformar o notebook em uma leitura visual mais direta: o mercado cresce
-                    forte no fim dos anos 2000, plataformas como PS2 e Wii concentram boa parte do historico, e a
-                    Nintendo domina varios dos picos mais memoraveis da base.
+                    Esta pagina transforma o notebook em uma leitura guiada por perguntas. Em vez de mostrar so tabelas,
+                    ela organiza a analise em respostas diretas: onde faltam dados, quando o mercado explode, quais
+                    generos e plataformas dominam e como as regioes mudam a interpretacao.
                 </p>
                 <div class="hero-actions">
                     <a class="button primary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos"
@@ -440,24 +447,24 @@
                 <p class="panel-title">Resumo rapido</p>
                 <div class="metric-grid">
                     <article class="metric-card">
-                        <p class="metric-label">Vendas globais</p>
-                        <p class="metric-value">8.811,97</p>
-                        <p class="metric-detail">milhoes de unidades somadas na base tratada.</p>
+                        <p class="metric-label">Base tratada</p>
+                        <p class="metric-value">16.291</p>
+                        <p class="metric-detail">jogos apos remover ausencias em Year e Publisher.</p>
                     </article>
                     <article class="metric-card">
-                        <p class="metric-label">Pico anual</p>
+                        <p class="metric-label">Pico de vendas</p>
                         <p class="metric-value">2008</p>
                         <p class="metric-detail">678,90 milhoes em vendas globais.</p>
                     </article>
                     <article class="metric-card">
-                        <p class="metric-label">Jogo lider</p>
-                        <p class="metric-value">Wii Sports</p>
-                        <p class="metric-detail">82,74 milhoes no Wii.</p>
+                        <p class="metric-label">Mais lancamentos</p>
+                        <p class="metric-value">2009</p>
+                        <p class="metric-detail">1.431 jogos no mesmo ano.</p>
                     </article>
                     <article class="metric-card">
-                        <p class="metric-label">Publicadora lider</p>
-                        <p class="metric-value">Nintendo</p>
-                        <p class="metric-detail">1.784,43 milhoes na soma global.</p>
+                        <p class="metric-label">Jogo lider</p>
+                        <p class="metric-value">Wii Sports</p>
+                        <p class="metric-detail">82,74 milhoes vendidos no Wii.</p>
                     </article>
                 </div>
             </aside>
@@ -465,105 +472,131 @@
 
         <section class="section">
             <div class="section-head">
-                <div>
-                    <p class="section-kicker">Base e leitura</p>
-                    <h2 class="section-title">O que esta pagina resume</h2>
-                </div>
+                <p class="section-kicker">Leitura executiva</p>
+                <h2 class="section-title">O que esta analise deixa claro</h2>
+                <p class="section-copy">
+                    O dataset tem poucas ausencias relevantes, o auge comercial se concentra entre 2007 e 2010 e a
+                    Nintendo aparece com enorme peso tanto entre publicadoras quanto entre os jogos mais vendidos. No
+                    recorte regional, a America do Norte lidera o volume total, enquanto Role-Playing ganha mais peso
+                    relativo no Japao.
+                </p>
             </div>
-            <p class="section-copy">
-                Esta visualizacao foi montada a partir do notebook `video_game_sales_grupo/exercicio.ipynb`, usando o
-                dataset `gregorut/videogamesales` via KaggleHub. Para manter a analise consistente, foram removidas as
-                linhas sem `Year` ou `Publisher`, o que deixa a base final com 16.291 jogos entre 1980 e 2020.
-            </p>
 
             <div class="fact-grid">
                 <article class="fact-card">
-                    <strong>Action lidera o acumulado</strong>
-                    <p>Com 1.722,84 milhoes, o genero Action aparece na frente de Sports e Shooter quando olhamos a
-                        soma de vendas globais.</p>
+                    <strong>Mercado no auge no fim dos anos 2000</strong>
+                    <p>2008 lidera em vendas globais e 2009 lidera em quantidade de lancamentos, mostrando um periodo
+                        muito forte de expansao.</p>
                 </article>
                 <article class="fact-card">
-                    <strong>PS2 domina entre plataformas</strong>
-                    <p>O PS2 chega a 1.233,46 milhoes e abre distancia do X360, do PS3 e do Wii no ranking historico.
-                    </p>
+                    <strong>Action e PS2 puxam o historico</strong>
+                    <p>Action lidera entre os generos e PS2 domina entre as plataformas, reforcando a forca da geracao
+                        dos anos 2000.</p>
                 </article>
                 <article class="fact-card">
-                    <strong>America do Norte puxa a escala</strong>
-                    <p>Com 4.327,65 milhoes, a regiao concentra o maior volume total, enquanto o Japao mostra forca
-                        relativa em Role-Playing.</p>
+                    <strong>A regiao muda a leitura por genero</strong>
+                    <p>Action, Sports e Shooter dependem mais de America do Norte e Europa, enquanto Role-Playing fica
+                        relativamente mais forte no Japao.</p>
                 </article>
             </div>
         </section>
 
         <section class="section">
             <div class="section-head">
-                <div>
-                    <p class="section-kicker">Graficos</p>
-                    <h2 class="section-title">Panorama visual da analise</h2>
-                </div>
+                <p class="section-kicker">Perguntas respondidas</p>
+                <h2 class="section-title">9 respostas com 9 graficos</h2>
+                <p class="section-copy">
+                    A mesma logica do notebook aparece aqui em formato de portfolio: cada bloco traz a pergunta, o
+                    grafico e uma interpretacao curta para acelerar a leitura.
+                </p>
             </div>
-            <p class="section-copy">
-                Os graficos abaixo condensam as principais perguntas do notebook: quando o mercado acelera, quais
-                categorias sustentam o volume, quem mais publica, quais jogos puxam o topo e como as vendas se
-                distribuem entre as regioes.
-            </p>
 
             <div class="chart-grid">
+                <article class="chart-card">
+                    <span class="question-id">Pergunta 1</span>
+                    <h3>Onde estao os principais dados ausentes?</h3>
+                    <p>As ausencias se concentram em `Year` e `Publisher`. O resto da base esta completo, o que ajuda a
+                        sustentar a analise sem grandes perdas.</p>
+                    <div class="chart-wrap">
+                        <canvas id="missingChart"></canvas>
+                    </div>
+                </article>
+
                 <article class="chart-card large">
-                    <h3>Vendas globais por ano</h3>
-                    <p>O crescimento se intensifica a partir de 2001, atinge o pico em 2008 e perde forca nos anos
-                        finais da base, que tambem tem menos registros.</p>
+                    <span class="question-id">Pergunta 2</span>
+                    <h3>Em quais anos as vendas globais atingiram o pico?</h3>
+                    <p>O maior valor aparece em 2008, com 678,90 milhoes. 2009 e 2010 continuam em patamar muito alto,
+                        consolidando o fim dos anos 2000 como o auge do dataset.</p>
                     <div class="chart-wrap">
                         <canvas id="salesByYear"></canvas>
                     </div>
                 </article>
 
+                <article class="chart-card large">
+                    <span class="question-id">Pergunta 3</span>
+                    <h3>Em quais anos houve mais lancamentos de jogos?</h3>
+                    <p>O ano de 2009 lidera em quantidade de titulos. Isso mostra que o pico comercial tambem veio
+                        acompanhado por uma oferta muito alta de jogos.</p>
+                    <div class="chart-wrap">
+                        <canvas id="releasesByYear"></canvas>
+                    </div>
+                </article>
+
                 <article class="chart-card">
-                    <h3>Top generos</h3>
-                    <p>Action e Sports formam a primeira camada do mercado, com Shooter logo na sequencia.</p>
+                    <span class="question-id">Pergunta 4</span>
+                    <h3>Quais generos mais venderam?</h3>
+                    <p>Action assume a primeira posicao, seguido por Sports e Shooter. O mercado historico favorece
+                        generos de escala ampla e apelo massivo.</p>
                     <div class="chart-wrap">
                         <canvas id="genresChart"></canvas>
                     </div>
                 </article>
 
                 <article class="chart-card">
-                    <h3>Top plataformas</h3>
-                    <p>O recorte historico favorece plataformas que combinaram catalogo amplo e ciclos muito fortes.
-                    </p>
+                    <span class="question-id">Pergunta 5</span>
+                    <h3>Quais plataformas dominaram as vendas?</h3>
+                    <p>PS2 abre vantagem no ranking, com X360, PS3 e Wii logo atras. O centro da base esta fortemente
+                        ligado a plataformas dominantes dos anos 2000.</p>
                     <div class="chart-wrap">
                         <canvas id="platformsChart"></canvas>
                     </div>
                 </article>
 
                 <article class="chart-card">
-                    <h3>Top publicadoras</h3>
-                    <p>Nintendo e Electronic Arts aparecem em um patamar acima do restante da amostra.</p>
+                    <span class="question-id">Pergunta 6</span>
+                    <h3>Quais publicadoras concentraram mais vendas?</h3>
+                    <p>Nintendo lidera com ampla margem, seguida por Electronic Arts e Activision. A concentracao de
+                        catalogos fortes explica boa parte dessa vantagem.</p>
                     <div class="chart-wrap">
                         <canvas id="publishersChart"></canvas>
                     </div>
                 </article>
 
                 <article class="chart-card">
-                    <h3>Top jogos</h3>
-                    <p>Wii Sports abre uma vantagem enorme, seguido por classicos que atravessaram geracoes.</p>
+                    <span class="question-id">Pergunta 7</span>
+                    <h3>Quais jogos foram os maiores campeoes de vendas?</h3>
+                    <p>Wii Sports se distancia muito do restante. O topo do ranking tambem reforca o peso da Nintendo
+                        nas franquias mais valiosas da base.</p>
                     <div class="chart-wrap">
                         <canvas id="gamesChart"></canvas>
                     </div>
                 </article>
 
                 <article class="chart-card">
-                    <h3>Participacao por regiao</h3>
-                    <p>America do Norte e Europa seguram a maior parte do volume, mas o Japao altera bastante o perfil
-                        em alguns generos.</p>
+                    <span class="question-id">Pergunta 8</span>
+                    <h3>Como as vendas se distribuem entre as regioes?</h3>
+                    <p>America do Norte lidera com folga, seguida por Europa e Japao. O centro de gravidade comercial
+                        do dataset esta mais no Ocidente.</p>
                     <div class="chart-wrap">
                         <canvas id="regionsChart"></canvas>
                     </div>
                 </article>
 
                 <article class="chart-card large">
-                    <h3>Top 5 generos por regiao</h3>
-                    <p>O grafico empilhado ajuda a comparar como as regioes pesam em cada genero lider. Role-Playing se
-                        destaca pelo peso japones.</p>
+                    <span class="question-id">Pergunta 9</span>
+                    <h3>O peso das regioes muda entre os generos lideres?</h3>
+                    <p>Sim. Action, Sports e Shooter dependem mais de America do Norte e Europa, enquanto
+                        Role-Playing mostra um peso japones relativamente maior.</p>
                     <div class="chart-wrap">
                         <canvas id="genreRegionChart"></canvas>
                     </div>
@@ -573,33 +606,32 @@
 
         <section class="section">
             <div class="section-head">
-                <div>
-                    <p class="section-kicker">Metodo</p>
-                    <h2 class="section-title">Como esta pagina foi montada</h2>
-                </div>
+                <p class="section-kicker">Metodo</p>
+                <h2 class="section-title">Como esta pagina foi montada</h2>
             </div>
             <div class="method-grid">
                 <article class="method-card">
                     <p class="section-copy" style="margin-top: 0;">
-                        A pagina traduz o notebook para um formato de portfolio no GitHub Pages. A ideia nao e
-                        substituir a exploracao em Python, mas deixar a leitura principal acessivel sem abrir o Jupyter.
+                        A pagina traduz o notebook `video_game_sales_grupo/exercicio.ipynb` para um formato de GitHub
+                        Pages. O objetivo foi deixar a narrativa mais clara para apresentacao, com perguntas explicitas
+                        e respostas visuais diretas.
                     </p>
                     <ul>
                         <li>Base original com 16.598 linhas e 11 colunas.</li>
                         <li>Base tratada com 16.291 linhas apos remover ausencias em `Year` e `Publisher`.</li>
-                        <li>Vendas expressas em milhoes de unidades, seguindo o dataset original.</li>
-                        <li>Notebook fonte: `video_game_sales_grupo/exercicio.ipynb`.</li>
+                        <li>Analise com 9 perguntas e 9 graficos.</li>
+                        <li>Vendas expressas em milhoes, seguindo o dataset original.</li>
                     </ul>
                 </article>
                 <article class="method-card">
                     <strong>Leitura importante</strong>
                     <p class="section-copy" style="margin-top: 10px;">
-                        Os anos de 2017 e 2020 aparecem com pouquissimos registros no dataset. Isso significa que a
-                        queda extrema no fim da serie deve ser lida como limite da base, e nao so como comportamento do
-                        mercado.
+                        Os anos finais da base tem poucos registros, especialmente 2017 e 2020. Por isso, a queda
+                        extrema no final da serie deve ser lida como limite do dataset, e nao so como comportamento real
+                        do mercado.
                     </p>
-                    <span class="note">Ponto forte da pagina: ela vira uma vitrine visual do notebook sem depender de
-                        screenshots ou export manual de graficos.</span>
+                    <span class="note">O notebook e a pagina agora contam a mesma historia, com a mesma estrutura de
+                        perguntas e graficos.</span>
                 </article>
             </div>
         </section>
@@ -615,6 +647,11 @@
     </div>
 
     <script>
+        const missingValues = {
+            labels: ["Year", "Publisher"],
+            values: [271, 58]
+        };
+
         const yearlySales = {
             labels: [1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995,
                 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
@@ -623,6 +660,16 @@
             values: [11.38, 35.77, 28.86, 16.79, 50.36, 53.94, 37.07, 21.74, 47.22, 73.45, 49.39, 32.23, 76.16, 45.98,
                 79.17, 88.11, 199.15, 200.98, 256.47, 251.27, 201.56, 331.47, 395.52, 357.85, 414.01, 458.51,
                 521.04, 609.92, 678.9, 667.3, 600.29, 515.8, 363.49, 368.11, 337.03, 264.44, 70.9, 0.05, 0.29
+            ]
+        };
+
+        const releasesByYear = {
+            labels: [1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995,
+                1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011,
+                2012, 2013, 2014, 2015, 2016, 2017, 2020
+            ],
+            values: [9, 46, 36, 17, 14, 14, 21, 16, 15, 17, 16, 41, 43, 60, 121, 219, 263, 289, 379, 338, 349, 482,
+                829, 775, 744, 936, 1008, 1201, 1428, 1431, 1257, 1136, 655, 546, 580, 614, 342, 3, 1
             ]
         };
 
@@ -672,22 +719,22 @@
         const genreRegion = {
             labels: ["Action", "Sports", "Shooter", "Role-Playing", "Platform"],
             datasets: [{
-                    label: "NA",
+                    label: "America do Norte",
                     data: [861.77, 670.09, 575.16, 326.5, 445.99],
                     color: "#0f766e"
                 },
                 {
-                    label: "EU",
+                    label: "Europa",
                     data: [516.48, 371.34, 310.45, 187.57, 200.65],
                     color: "#f4b740"
                 },
                 {
-                    label: "JP",
+                    label: "Japao",
                     data: [158.65, 134.76, 38.18, 350.29, 130.65],
                     color: "#e76f51"
                 },
                 {
-                    label: "Other",
+                    label: "Outras regioes",
                     data: [184.92, 132.65, 101.9, 59.38, 51.51],
                     color: "#1d4ed8"
                 }
@@ -723,7 +770,7 @@
                 callbacks: {
                     label(context) {
                         const value = context.parsed.x ?? context.parsed.y ?? context.parsed;
-                        return `${context.dataset.label || context.label}: ${numberFormat.format(value)} mi`;
+                        return `${context.dataset.label || context.label}: ${numberFormat.format(value)}`;
                     }
                 }
             }
@@ -751,7 +798,7 @@
                 data: {
                     labels,
                     datasets: [{
-                        label: "Vendas",
+                        label: "Valor",
                         data: values,
                         borderRadius: 12,
                         backgroundColor: color,
@@ -776,41 +823,45 @@
             });
         }
 
-        new Chart(document.getElementById("salesByYear"), {
-            type: "line",
-            data: {
-                labels: yearlySales.labels,
-                datasets: [{
-                    label: "Vendas globais",
-                    data: yearlySales.values,
-                    fill: true,
-                    borderColor: "#0f766e",
-                    backgroundColor: "rgba(15, 118, 110, 0.12)",
-                    tension: 0.32,
-                    pointRadius: 0,
-                    pointHoverRadius: 4,
-                    pointHoverBackgroundColor: "#d97706"
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    ...commonPlugins,
-                    legend: {
-                        display: false
-                    }
+        function createLineChart(canvasId, labels, values, stroke, fill) {
+            return new Chart(document.getElementById(canvasId), {
+                type: "line",
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "Valor",
+                        data: values,
+                        fill: true,
+                        borderColor: stroke,
+                        backgroundColor: fill,
+                        tension: 0.32,
+                        pointRadius: 0,
+                        pointHoverRadius: 4
+                    }]
                 },
-                scales: {
-                    x: axisStyle,
-                    y: axisStyle
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        ...commonPlugins,
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: axisStyle,
+                        y: axisStyle
+                    }
                 }
-            }
-        });
+            });
+        }
 
+        createBarChart("missingChart", missingValues.labels, missingValues.values, "#d97706");
+        createLineChart("salesByYear", yearlySales.labels, yearlySales.values, "#0f766e", "rgba(15, 118, 110, 0.12)");
+        createLineChart("releasesByYear", releasesByYear.labels, releasesByYear.values, "#1d4ed8", "rgba(59, 130, 246, 0.14)");
         createBarChart("genresChart", topGenres.labels, topGenres.values, "#0f766e");
-        createBarChart("platformsChart", topPlatforms.labels, topPlatforms.values, "#d97706");
-        createBarChart("publishersChart", topPublishers.labels, topPublishers.values, "#1d4ed8");
-        createBarChart("gamesChart", topGames.labels, topGames.values, "#e76f51");
+        createBarChart("platformsChart", topPlatforms.labels, topPlatforms.values, "#1d4ed8");
+        createBarChart("publishersChart", topPublishers.labels, topPublishers.values, "#e76f51");
+        createBarChart("gamesChart", topGames.labels, topGames.values, "#d97706");
 
         new Chart(document.getElementById("regionsChart"), {
             type: "doughnut",
@@ -828,9 +879,7 @@
             options: {
                 maintainAspectRatio: false,
                 cutout: "58%",
-                plugins: {
-                    ...commonPlugins
-                }
+                plugins: commonPlugins
             }
         });
 
