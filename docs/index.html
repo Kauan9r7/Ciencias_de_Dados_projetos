@@ -458,8 +458,8 @@
                     </article>
                     <article class="metric-card">
                         <p class="metric-label">Notebooks</p>
-                        <p class="metric-value">5</p>
-                        <p class="metric-detail">Exploracao, limpeza, metricas, visualizacoes e um estudo final mais completo.</p>
+                        <p class="metric-value">6</p>
+                        <p class="metric-detail">Exploracao, limpeza, metricas, visualizacoes e trabalhos com dados do Bolsa Familia.</p>
                     </article>
                     <article class="metric-card">
                         <p class="metric-label">Destaque</p>
@@ -543,16 +543,18 @@
                     <div class="card-head">
                         <div>
                             <h3 class="card-title">medidas_visualizacoes</h3>
-                            <p>Exercicios sobre metricas e visualizacoes com dados do Bolsa Familia, distribuidos em dois notebooks.</p>
+                            <p>Exercicios sobre metricas descritivas e visualizacoes com dados abertos do Bolsa Familia, em dois notebooks complementares.</p>
                         </div>
-                        <span class="tag alt">GitHub</span>
+                        <span class="tag alt">Bolsa Familia</span>
                     </div>
                     <div class="card-meta">
                         <span>2 notebooks</span>
-                        <span>Metricas e graficos</span>
+                        <span>15 metricas</span>
+                        <span>15 graficos</span>
                     </div>
                     <div class="card-actions">
-                        <a class="button secondary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/tree/master/medidas_visualizacoes" target="_blank" rel="noreferrer">Abrir no GitHub</a>
+                        <a class="button secondary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/blob/master/medidas_visualizacoes/Exercicio_1_BolsaFamilia_Metricas.ipynb" target="_blank" rel="noreferrer">Metricas</a>
+                        <a class="button secondary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/blob/master/medidas_visualizacoes/Exercicio_2_BolsaFamilia_Visualizacoes.ipynb" target="_blank" rel="noreferrer">Visualizacoes</a>
                     </div>
                 </article>
             </div>
@@ -593,11 +595,61 @@
             </div>
         </section>
 
+        <section class="section">
+            <div>
+                <p class="section-kicker">Exercicios com dados publicos</p>
+                <h2 class="section-title">Bolsa Familia — metricas e visualizacoes</h2>
+                <p class="section-copy">
+                    Dois notebooks complementares que usam os dados abertos do programa Bolsa Familia para
+                    responder 30 questoes no total: 15 de metricas descritivas com <code>pandas</code> e
+                    15 de visualizacoes com <code>matplotlib</code> e <code>seaborn</code>.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <h3 class="card-title">Exercicio 1 — Metricas com pandas</h3>
+                    <p>
+                        Contagens, valores distintos, media, mediana, minimo e maximo aplicados as colunas
+                        <code>VALOR PARCELA</code>, <code>UF</code>, <code>NOME MUNICIPIO</code> e <code>MES REFERENCIA</code>.
+                        A base e carregada via <code>gdown</code> a partir do Google Drive.
+                    </p>
+                    <ul class="feature-list">
+                        <li>7,7 milhoes de registros no dataset original.</li>
+                        <li>Limpeza de nulos e conversao de tipos antes das metricas.</li>
+                        <li>Agrupamentos por UF, municipio e mes de referencia.</li>
+                    </ul>
+                    <div class="feature-actions">
+                        <a class="button primary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/blob/master/medidas_visualizacoes/Exercicio_1_BolsaFamilia_Metricas.ipynb" target="_blank" rel="noreferrer">Ver notebook</a>
+                        <a class="button secondary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/tree/master/medidas_visualizacoes" target="_blank" rel="noreferrer">Pasta no GitHub</a>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <h3 class="card-title">Exercicio 2 — Visualizacoes com matplotlib</h3>
+                    <ul class="feature-list">
+                        <li>Graficos de barras: registros por UF e top 10 municipios.</li>
+                        <li>Graficos de linha: soma e contagem de registros por mes.</li>
+                        <li>Histogramas com linhas de media e mediana.</li>
+                        <li>Boxplots geral e por UF (top 5 estados).</li>
+                        <li>Scatter plot com correlacao de Pearson.</li>
+                        <li>Grafico de pizza com participacao por UF (top 5 + Outros).</li>
+                        <li>Heatmap UF x mes com <code>imshow</code>.</li>
+                        <li>Linha acumulada do valor total pago por mes.</li>
+                    </ul>
+                    <div class="feature-actions">
+                        <a class="button primary" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/blob/master/medidas_visualizacoes/Exercicio_2_BolsaFamilia_Visualizacoes.ipynb" target="_blank" rel="noreferrer">Ver notebook</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <footer class="footer">
             <span>Repositorio academico de Introducao a Ciencia de Dados</span>
             <div class="footer-links">
                 <a href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos" target="_blank" rel="noreferrer">GitHub</a>
                 <a href="./analise-vgsales.html">Pagina do analise-vgsales</a>
+                <a href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/tree/master/medidas_visualizacoes" target="_blank" rel="noreferrer">medidas_visualizacoes</a>
             </div>
         </footer>
     </div>
