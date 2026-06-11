@@ -9,9 +9,16 @@ Esta pasta contém os seguintes arquivos:
 - `codigos_valores_multas.csv`: Tabela auxiliar com os códigos de infração do CTB e seus respectivos valores em Reais (R$).
 - `dados_2025.parquet`: A base de dados final, limpa, tipada e unificada, pronta para análise.
 
-## Base de Dados Original
+## Fontes e Bases de Dados
 
-Os dados brutos são fornecidos mensalmente pelo **Portal de Dados Abertos do DF** (infrações de trânsito de 2025). O notebook é responsável por baixar os 12 arquivos mensais via URL (`pd.read_csv`) e unificá-los em um único *DataFrame* usando `pd.concat`.
+As bases utilizadas neste projeto são totalmente públicas e abertas:
+
+1. **Dados de Infrações do DF (Base Principal):**
+   Os dados brutos de infrações (separados por mês) foram extraídos do [Portal de Dados Abertos do Distrito Federal](https://www.dados.df.gov.br/dataset/infracoes-transito).
+   O notebook se encarrega de ler cada um dos arquivos mensais de 2025 diretamente via URL e consolidá-los.
+
+2. **Valores das Multas (Base Secundária):**
+   O arquivo `codigos_valores_multas.csv` foi montado manualmente tendo como referência a [Portaria SENATRAN n.º 354/2022 (Anexo IV)](https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/portarias/2022/Portaria3542022AnexoN4.pdf). Ele correlaciona o código específico da infração do CTB com seu respectivo valor final em Reais, já considerando os multiplicadores legais aplicáveis.
 
 ## Processo de Limpeza (O que o notebook faz)
 
