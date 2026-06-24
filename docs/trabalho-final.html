@@ -509,6 +509,7 @@ function initCharts() {
   });
 
   // Q6: Gravidade (Doughnut)
+  const q6Total = window.DATA.q6.reduce((s, d) => s + d.count, 0);
   new Chart(document.getElementById('chartQ6'), {
     type: 'doughnut',
     data: {
@@ -521,7 +522,18 @@ function initCharts() {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'right', labels: { color: '#e7e9f3' } } },
+      plugins: {
+        legend: { position: 'right', labels: { color: '#e7e9f3' } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const val = ctx.parsed;
+              const pct = ((val / q6Total) * 100).toFixed(1);
+              return ` ${val.toLocaleString('pt-BR')} ocorrências (${pct}%)`;
+            }
+          }
+        }
+      },
       cutout: '70%'
     }
   });
