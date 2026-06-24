@@ -2,6 +2,12 @@
 
 Projeto final da disciplina de **Introdução à Ciência de Dados**, focado na extração, limpeza, padronização e análise exploratória de dados governamentais abertos sobre infrações de trânsito. O projeto está dividido em duas etapas principais: ETL (Tratamento) e Visualização (Análise).
 
+**Integrantes do Grupo:**
+- Gabriel Queiroz — gabriel.sabatino@sempreceub.com
+- Cauan Bastos — cauan.br@sempreceub.com
+- Joao Tarik — joao.tarik@sempreceub.com
+- Enzo
+
 ## 🌐 Apresentação Interativa
 
 Os resultados da análise foram compilados em uma página web interativa (dashboard) rodando no GitHub Pages.
