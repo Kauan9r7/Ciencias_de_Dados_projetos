@@ -47,14 +47,3 @@ O notebook `tratamento_dodos.ipynb` está dividido nas seguintes etapas de proce
 7. **Exportação Otimizada**:
    - Salva o resultado final no formato `.parquet`.
    - Este formato foi escolhido por preservar as tipagens nativas do Pandas (`datetime`, `timedelta`, `float`) e por entregar alta performance de leitura.
-
-## Como utilizar
-
-Para seguir com as análises (seja criando gráficos ou gerando estatísticas), basta abrir um novo notebook e carregar a base pré-processada:
-
-```python
-import pandas as pd
-
-df = pd.read_parquet('dados/dados_2025.parquet')
-df.info()
-```
