@@ -6,7 +6,7 @@ Projeto final da disciplina de **Introdução à Ciência de Dados**, focado na 
 - Gabriel Queiroz — gabriel.sabatino@sempreceub.com
 - Cauan Bastos — cauan.br@sempreceub.com
 - Joao Tarik — joao.tarik@sempreceub.com
-- Enzo Machado — enzowschumacher@gmail.com
+- Enzo Machado — enzo.machado@sempreceub.com
 
 ## 🌐 Apresentação Interativa
 
