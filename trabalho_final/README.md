@@ -1,49 +1,56 @@
-# Tratamento de Dados — Autuações de Trânsito DF (2025)
+# Análise e Tratamento de Dados — Autuações de Trânsito DF (2025)
 
-Projeto final ou parte da disciplina de **Introdução à Ciência de Dados**, focado na extração, limpeza, padronização e estruturação de dados governamentais abertos sobre infrações de trânsito.
-
+Projeto final da disciplina de **Introdução à Ciência de Dados**, focado na extração, limpeza, padronização e análise exploratória de dados governamentais abertos sobre infrações de trânsito. O projeto está dividido em duas etapas principais: ETL (Tratamento) e Visualização (Análise).
 
 ## 🌐 Apresentação Interativa
 
-Este projeto possui uma página web iterativa (dashboard) rodando no GitHub Pages:
+Os resultados da análise foram compilados em uma página web interativa (dashboard) rodando no GitHub Pages.
 **[Acessar Apresentação: Infrações DF 2025](https://kauan9r7.github.io/Ciencias_de_Dados_projetos/trabalho-final.html)**
 
 ---
-Esta pasta contém os seguintes arquivos:
+## Estrutura da Pasta
 
-- `README.md`
-- `tratamento_dodos.ipynb`: Notebook com todo o fluxo de ETL (Extract, Transform, Load).
-- `dados/codigos_valores_multas.csv`: Tabela auxiliar com os códigos de infração do CTB e seus respectivos valores em Reais (R$).
-- `dados_2025.parquet`: A base de dados final, limpa, tipada e unificada, pronta para análise.
+Esta pasta contém os seguintes arquivos e diretórios:
+
+- `README.md`: Este documento.
+- `tratamento_dodos.ipynb`: Notebook focado em extrair, limpar e unificar os dados (ETL).
+- `analise.ipynb`: Notebook focado em análise exploratória de dados (EDA) e geração de gráficos.
+- `dados/codigos_valores_multas.csv`: Tabela auxiliar montada manualmente com valores das multas.
+- `dados/dados_2025.parquet`: A base de dados final, gerada pelo primeiro notebook e consumida pelo segundo.
+- `docs/`: Pasta contendo a exportação em HTML e os arquivos de dados (JSON) que alimentam a apresentação interativa.
 
 ## Fontes e Bases de Dados
 
 As bases utilizadas neste projeto são totalmente públicas e abertas:
 
-1. **Dados de Infrações do DF (Base Principal):**
-   Os dados brutos de infrações (separados por mês) foram extraídos do [Portal de Dados Abertos do Distrito Federal](https://www.dados.df.gov.br/dataset/infracoes-transito).
-   O notebook se encarrega de ler cada um dos arquivos mensais de 2025 diretamente via URL e consolidá-los.
+1. **Dados de Infrações do DF (Base Principal):** Extraídos do [Portal de Dados Abertos do Distrito Federal](https://www.dados.df.gov.br/dataset/infracoes-transito). O notebook faz o download e a consolidação diretamente via URL.
+2. **Valores das Multas (Base Secundária):** Baseado na [Portaria SENATRAN n.º 354/2022 (Anexo IV)](https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/portarias/2022/Portaria3542022AnexoN4.pdf), para correlacionar o código da infração ao valor pago.
 
-2. **Valores das Multas (Base Secundária):**
-   O arquivo `dados/codigos_valores_multas.csv` foi montado manualmente tendo como referência a [Portaria SENATRAN n.º 354/2022 (Anexo IV)](https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/portarias/2022/Portaria3542022AnexoN4.pdf). Ele correlaciona o código específico da infração do CTB com seu respectivo valor final em Reais, já considerando os multiplicadores legais aplicáveis.
+## Parte 1: Processo de Limpeza (`tratamento_dodos.ipynb`)
 
-## Processo de Limpeza (O que o notebook faz)
+Este notebook é responsável por preparar a base:
 
-O notebook `tratamento_dodos.ipynb` está dividido nas seguintes etapas de processamento:
+1. **Coleta e Consolidação**: Lê os CSVs mensais dos links da transparência do DF.
+2. **Padronização de Texto**: Converte categorias para minúsculo e remove acentuação/espaços.
+3. **Limpeza e Tratamento de Nulos**: Preenche dados vazios e remove colunas irrelevantes.
+4. **Conversão de Datas (Features)**: Transforma colunas de data em tipos nativos (`datetime`, `timedelta`) e extrai o dia da semana.
+5. **Cruzamento (Valores)**: Faz um `LEFT JOIN` com `dados/codigos_valores_multas.csv` para incluir o valor da infração em Reais.
+6. **Exportação Otimizada**: Salva o arquivo final no formato `.parquet` para manter as tipagens do Pandas e garantir alta velocidade na próxima etapa.
 
-1. **Coleta e Consolidação**: Lê os CSVs mensais diretamente dos links da transparência do DF.
-2. **Inspeção Inicial**: Exibição da contagem e tipos iniciais das variáveis (geralmente lidas como texto).
-3. **Análise da Distribuição**: Identificação de inconsistências em colunas categóricas (como letras maiúsculas/minúsculas e acentos).
-4. **Padronização de Texto e Nulos**: 
-   - Converte todas as categorias para minúsculo, remove acentuação e espaços duplos.
-   - Preenche valores em branco ou `NaN` com a string constante `"Não informado"`.
-5. **Conversão de Datas e Criação de Features**:
-   - `cometimento` convertido para o tipo `datetime`.
-   - Criação da nova coluna `dia_da_semana` baseada na data real do calendário.
-   - `hora_cometimento` formatada corretamente (adição de `:00` nos segundos) e convertida para o tipo nativo `timedelta`.
-6. **Cruzamento de Dados (Valores das Multas)**:
-   - Faz a leitura da tabela auxiliar `dados/codigos_valores_multas.csv`.
-   - Realiza um `LEFT JOIN` (merge) utilizando o código da infração (`tipo_infracao`) para trazer a coluna numérica `Valor_multa` para a base original.
-7. **Exportação Otimizada**:
-   - Salva o resultado final no formato `.parquet`.
-   - Este formato foi escolhido por preservar as tipagens nativas do Pandas (`datetime`, `timedelta`, `float`) e por entregar alta performance de leitura.
+## Parte 2: Análise Exploratória (`analise.ipynb`)
+
+Este notebook consome a base pré-processada (`dados/dados_2025.parquet`) para responder perguntas-chave sobre as infrações no Distrito Federal através de gráficos:
+
+1. **Onde ocorrem?** (Top rodovias autuadoras)
+2. **Quando ocorrem?** (Distribuição por mês, dias da semana e hora do dia)
+3. **Quais são os principais motivos?** (Excesso de velocidade, invasão de faixas, uso de celular)
+4. **Qual a gravidade e valor?** (Análise da distribuição de multas médias e gravíssimas e arrecadação)
+5. **Quais veículos mais cometem infrações?** (Automóveis, caminhonetes, motos, etc.)
+
+Os insights e os dados tratados neste notebook foram exportados e integram o **Dashboard Interativo** hospedado no GitHub Pages (link acima).
+
+## Como utilizar
+
+Para reproduzir o projeto, siga a ordem dos notebooks:
+1. Rode todas as células de `tratamento_dodos.ipynb` para gerar a base parquet dentro da pasta `dados/`.
+2. Rode `analise.ipynb` para ler a base e visualizar as distribuições estatísticas.
