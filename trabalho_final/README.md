@@ -13,7 +13,7 @@ Esta pasta contém os seguintes arquivos:
 
 - `README.md`
 - `tratamento_dodos.ipynb`: Notebook com todo o fluxo de ETL (Extract, Transform, Load).
-- `codigos_valores_multas.csv`: Tabela auxiliar com os códigos de infração do CTB e seus respectivos valores em Reais (R$).
+- `dados/codigos_valores_multas.csv`: Tabela auxiliar com os códigos de infração do CTB e seus respectivos valores em Reais (R$).
 - `dados_2025.parquet`: A base de dados final, limpa, tipada e unificada, pronta para análise.
 
 ## Fontes e Bases de Dados
@@ -25,7 +25,7 @@ As bases utilizadas neste projeto são totalmente públicas e abertas:
    O notebook se encarrega de ler cada um dos arquivos mensais de 2025 diretamente via URL e consolidá-los.
 
 2. **Valores das Multas (Base Secundária):**
-   O arquivo `codigos_valores_multas.csv` foi montado manualmente tendo como referência a [Portaria SENATRAN n.º 354/2022 (Anexo IV)](https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/portarias/2022/Portaria3542022AnexoN4.pdf). Ele correlaciona o código específico da infração do CTB com seu respectivo valor final em Reais, já considerando os multiplicadores legais aplicáveis.
+   O arquivo `dados/codigos_valores_multas.csv` foi montado manualmente tendo como referência a [Portaria SENATRAN n.º 354/2022 (Anexo IV)](https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/portarias/2022/Portaria3542022AnexoN4.pdf). Ele correlaciona o código específico da infração do CTB com seu respectivo valor final em Reais, já considerando os multiplicadores legais aplicáveis.
 
 ## Processo de Limpeza (O que o notebook faz)
 
@@ -42,7 +42,7 @@ O notebook `tratamento_dodos.ipynb` está dividido nas seguintes etapas de proce
    - Criação da nova coluna `dia_da_semana` baseada na data real do calendário.
    - `hora_cometimento` formatada corretamente (adição de `:00` nos segundos) e convertida para o tipo nativo `timedelta`.
 6. **Cruzamento de Dados (Valores das Multas)**:
-   - Faz a leitura da tabela auxiliar `codigos_valores_multas.csv`.
+   - Faz a leitura da tabela auxiliar `dados/codigos_valores_multas.csv`.
    - Realiza um `LEFT JOIN` (merge) utilizando o código da infração (`tipo_infracao`) para trazer a coluna numérica `Valor_multa` para a base original.
 7. **Exportação Otimizada**:
    - Salva o resultado final no formato `.parquet`.
@@ -55,6 +55,6 @@ Para seguir com as análises (seja criando gráficos ou gerando estatísticas), 
 ```python
 import pandas as pd
 
-df = pd.read_parquet('dados_2025.parquet')
+df = pd.read_parquet('dados/dados_2025.parquet')
 df.info()
 ```
