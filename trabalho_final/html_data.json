@@ -227,64 +227,36 @@
   ],
   "q5": [
     {
-      "descricao": "transitar em velocidade superior a maxima permitida em ate 2...",
+      "descricao": "Excesso de velocidade (até 20%)",
       "count": 373575
     },
     {
-      "descricao": "transitar na faixa/pista da direita regul circulacao exclusi...",
+      "descricao": "Transitar na faixa/pista da direita",
       "count": 164864
     },
     {
-      "descricao": "transitar em velocidade superior a maxima permitida em mais ...",
+      "descricao": "Excesso de velocidade (20% a 50%)",
       "count": 39796
     },
     {
-      "descricao": "deixar de indicar c/ antec, med gesto de braco/luz indicador...",
+      "descricao": "Não indicar com antecedência (gesto/luz)",
       "count": 27248
     },
     {
-      "descricao": "conduzir veic c/ defeito no sist de iluminacao, sinaliz ou l...",
+      "descricao": "Conduzir veículo c/ defeito no sist. de iluminação",
       "count": 23141
     },
     {
-      "descricao": "dirigir veiculo manuseando telefone celular",
+      "descricao": "Dirigir manuseando telefone celular",
       "count": 18548
     },
     {
-      "descricao": "deixar o condutor de usar o cinto seguranca",
+      "descricao": "Deixar de usar cinto de segurança",
       "count": 17839
     },
     {
-      "descricao": "conduzir o veiculo registrado que nao esteja devidamente lic...",
+      "descricao": "Veículo c/ débitos de registro",
       "count": 16407
-    },
-    {
-      "descricao": "deixar de indicar c/ antec, med gesto de braco/luz indicador...",
-      "count": 9694
-    },
-    {
-      "descricao": "dirigir veiculo segurando telefone celular",
-      "count": 8487
-    },
-    {
-      "descricao": "transitar na faixa ou via exclusiva regulam. p/ transp. publ...",
-      "count": 8212
-    },
-    {
-      "descricao": "transitar na faixa/pista da esquerda regul circulacao exclus...",
-      "count": 7166
-    },
-    {
-      "descricao": "transitar com o veiculo em marcas de canalizacao",
-      "count": 6161
-    },
-    {
-      "descricao": "deixar o passageiro de usar o cinto seguranca",
-      "count": 5622
-    },
-    {
-      "descricao": "transitar com o veiculo em acostamentos",
-      "count": 5484
     }
   ],
   "q6": [
@@ -307,35 +279,35 @@
   ],
   "q7": [
     {
-      "veiculo": "automovel",
+      "veiculo": "Automovel",
       "count": 494495
     },
     {
-      "veiculo": "caminhonete",
+      "veiculo": "Caminhonete",
       "count": 83314
     },
     {
-      "veiculo": "motocicleta",
+      "veiculo": "Motocicleta",
       "count": 75948
     },
     {
-      "veiculo": "camioneta",
+      "veiculo": "Camioneta",
       "count": 49744
     },
     {
-      "veiculo": "utilitario",
+      "veiculo": "Utilitario",
       "count": 33137
     },
     {
-      "veiculo": "caminhao",
+      "veiculo": "Caminhao",
       "count": 19379
     },
     {
-      "veiculo": "semi-reboque",
+      "veiculo": "Semi-reboque",
       "count": 13830
     },
     {
-      "veiculo": "caminhao trator",
+      "veiculo": "Caminhao trator",
       "count": 7248
     }
   ],
