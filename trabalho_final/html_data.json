@@ -1,0 +1,376 @@
+{
+  "meta": {
+    "total_infracoes": 788877,
+    "rodovias": 124,
+    "tipos_infracao": 249,
+    "total_multas_rs": 132278375.92
+  },
+  "q1": [
+    {
+      "rodovia": "df-075",
+      "count": 195289
+    },
+    {
+      "rodovia": "df-001",
+      "count": 146006
+    },
+    {
+      "rodovia": "df-003",
+      "count": 68463
+    },
+    {
+      "rodovia": "df-085",
+      "count": 60584
+    },
+    {
+      "rodovia": "df-005",
+      "count": 35337
+    },
+    {
+      "rodovia": "df-079",
+      "count": 30973
+    },
+    {
+      "rodovia": "df-150",
+      "count": 30498
+    },
+    {
+      "rodovia": "df-025",
+      "count": 26396
+    },
+    {
+      "rodovia": "df-004",
+      "count": 24636
+    },
+    {
+      "rodovia": "df-290",
+      "count": 24528
+    }
+  ],
+  "q2": [
+    {
+      "mes": 1,
+      "count": 59850
+    },
+    {
+      "mes": 2,
+      "count": 57503
+    },
+    {
+      "mes": 3,
+      "count": 59034
+    },
+    {
+      "mes": 4,
+      "count": 35342
+    },
+    {
+      "mes": 5,
+      "count": 45677
+    },
+    {
+      "mes": 6,
+      "count": 63049
+    },
+    {
+      "mes": 7,
+      "count": 92059
+    },
+    {
+      "mes": 8,
+      "count": 79133
+    },
+    {
+      "mes": 9,
+      "count": 82944
+    },
+    {
+      "mes": 10,
+      "count": 72824
+    },
+    {
+      "mes": 11,
+      "count": 67908
+    },
+    {
+      "mes": 12,
+      "count": 73554
+    }
+  ],
+  "q3": [
+    {
+      "dia": "segunda-feira",
+      "count": 124206
+    },
+    {
+      "dia": "terca-feira",
+      "count": 122597
+    },
+    {
+      "dia": "quarta-feira",
+      "count": 124675
+    },
+    {
+      "dia": "quinta-feira",
+      "count": 127133
+    },
+    {
+      "dia": "sexta-feira",
+      "count": 128913
+    },
+    {
+      "dia": "sabado",
+      "count": 84146
+    },
+    {
+      "dia": "domingo",
+      "count": 77207
+    }
+  ],
+  "q4": [
+    {
+      "hora": 0,
+      "count": 16208
+    },
+    {
+      "hora": 1,
+      "count": 10688
+    },
+    {
+      "hora": 2,
+      "count": 7976
+    },
+    {
+      "hora": 3,
+      "count": 7246
+    },
+    {
+      "hora": 4,
+      "count": 8642
+    },
+    {
+      "hora": 5,
+      "count": 12827
+    },
+    {
+      "hora": 6,
+      "count": 20296
+    },
+    {
+      "hora": 7,
+      "count": 31146
+    },
+    {
+      "hora": 8,
+      "count": 42819
+    },
+    {
+      "hora": 9,
+      "count": 53603
+    },
+    {
+      "hora": 10,
+      "count": 50040
+    },
+    {
+      "hora": 11,
+      "count": 40512
+    },
+    {
+      "hora": 12,
+      "count": 37113
+    },
+    {
+      "hora": 13,
+      "count": 37347
+    },
+    {
+      "hora": 14,
+      "count": 41485
+    },
+    {
+      "hora": 15,
+      "count": 49218
+    },
+    {
+      "hora": 16,
+      "count": 67778
+    },
+    {
+      "hora": 17,
+      "count": 68961
+    },
+    {
+      "hora": 18,
+      "count": 44372
+    },
+    {
+      "hora": 19,
+      "count": 36184
+    },
+    {
+      "hora": 20,
+      "count": 29916
+    },
+    {
+      "hora": 21,
+      "count": 27403
+    },
+    {
+      "hora": 22,
+      "count": 25247
+    },
+    {
+      "hora": 23,
+      "count": 21850
+    }
+  ],
+  "q5": [
+    {
+      "descricao": "transitar em velocidade superior a maxima permitida em ate 2...",
+      "count": 373575
+    },
+    {
+      "descricao": "transitar na faixa/pista da direita regul circulacao exclusi...",
+      "count": 164864
+    },
+    {
+      "descricao": "transitar em velocidade superior a maxima permitida em mais ...",
+      "count": 39796
+    },
+    {
+      "descricao": "deixar de indicar c/ antec, med gesto de braco/luz indicador...",
+      "count": 27248
+    },
+    {
+      "descricao": "conduzir veic c/ defeito no sist de iluminacao, sinaliz ou l...",
+      "count": 23141
+    },
+    {
+      "descricao": "dirigir veiculo manuseando telefone celular",
+      "count": 18548
+    },
+    {
+      "descricao": "deixar o condutor de usar o cinto seguranca",
+      "count": 17839
+    },
+    {
+      "descricao": "conduzir o veiculo registrado que nao esteja devidamente lic...",
+      "count": 16407
+    },
+    {
+      "descricao": "deixar de indicar c/ antec, med gesto de braco/luz indicador...",
+      "count": 9694
+    },
+    {
+      "descricao": "dirigir veiculo segurando telefone celular",
+      "count": 8487
+    },
+    {
+      "descricao": "transitar na faixa ou via exclusiva regulam. p/ transp. publ...",
+      "count": 8212
+    },
+    {
+      "descricao": "transitar na faixa/pista da esquerda regul circulacao exclus...",
+      "count": 7166
+    },
+    {
+      "descricao": "transitar com o veiculo em marcas de canalizacao",
+      "count": 6161
+    },
+    {
+      "descricao": "deixar o passageiro de usar o cinto seguranca",
+      "count": 5622
+    },
+    {
+      "descricao": "transitar com o veiculo em acostamentos",
+      "count": 5484
+    }
+  ],
+  "q6": [
+    {
+      "gravidade": "leve",
+      "count": 166196
+    },
+    {
+      "gravidade": "media",
+      "count": 413372
+    },
+    {
+      "gravidade": "grave",
+      "count": 125689
+    },
+    {
+      "gravidade": "gravissima",
+      "count": 83620
+    }
+  ],
+  "q7": [
+    {
+      "veiculo": "automovel",
+      "count": 494495
+    },
+    {
+      "veiculo": "caminhonete",
+      "count": 83314
+    },
+    {
+      "veiculo": "motocicleta",
+      "count": 75948
+    },
+    {
+      "veiculo": "camioneta",
+      "count": 49744
+    },
+    {
+      "veiculo": "utilitario",
+      "count": 33137
+    },
+    {
+      "veiculo": "caminhao",
+      "count": 19379
+    },
+    {
+      "veiculo": "semi-reboque",
+      "count": 13830
+    },
+    {
+      "veiculo": "caminhao trator",
+      "count": 7248
+    }
+  ],
+  "q8": [
+    {
+      "valor": 88.38,
+      "count": 166196
+    },
+    {
+      "valor": 130.16,
+      "count": 413372
+    },
+    {
+      "valor": 195.23,
+      "count": 125689
+    },
+    {
+      "valor": 293.47,
+      "count": 62750
+    },
+    {
+      "valor": 586.94,
+      "count": 241
+    },
+    {
+      "valor": 880.41,
+      "count": 16326
+    },
+    {
+      "valor": 1467.35,
+      "count": 4301
+    },
+    {
+      "valor": 2934.7,
+      "count": 2
+    }
+  ]
+}

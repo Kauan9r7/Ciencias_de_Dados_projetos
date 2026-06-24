@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Infrações de Trânsito no DF (2025) · Análise</title>
+<meta name="description" content="Análise exploratória de dados de infrações de trânsito nas rodovias do Distrito Federal em 2025." />
+<meta name="theme-color" content="#06070d" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      colors: {
+        ink: { 950:'#06070d', 900:'#0a0d18', 850:'#0e1220', 800:'#131829', 700:'#1c2238', 600:'#272e4a' },
+        neon: { cyan:'#22d3ee', violet:'#a78bfa', magenta:'#f472b6', lime:'#a3e635', amber:'#fbbf24' },
+      },
+      animation: {
+        'fade-up': 'fadeUp .9s cubic-bezier(.2,.7,.2,1) both',
+        'pulse-soft': 'pulseSoft 4s ease-in-out infinite',
+        'spin-slow': 'spin 22s linear infinite',
+        'shimmer': 'shimmer 4s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeUp: { '0%':{opacity:0,transform:'translateY(24px)'},'100%':{opacity:1,transform:'translateY(0)'} },
+        pulseSoft: { '0%,100%':{opacity:.7},'50%':{opacity:1} },
+        shimmer: { '0%,100%':{backgroundPosition:'0% 50%'},'50%':{backgroundPosition:'100% 50%'} },
+      },
+    },
+  },
+};
+</script>
+
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #06070d;
+    color: #e7e9f3;
+    font-feature-settings: "ss01","cv11";
+    overflow-x: hidden;
+  }
+  .grid-bg {
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(168,139,250,.18), transparent 55%),
+      radial-gradient(circle at 80% 30%, rgba(34,211,238,.14), transparent 55%),
+      radial-gradient(circle at 50% 90%, rgba(244,114,182,.10), transparent 60%),
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: auto, auto, auto, 60px 60px, 60px 60px;
+  }
+  .glass {
+    background: linear-gradient(140deg, rgba(28,34,56,.55), rgba(14,18,32,.55));
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(255,255,255,.06);
+    box-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .neon-border {
+    position: relative;
+  }
+  .neon-border::before{
+    content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+    background: linear-gradient(135deg, rgba(34,211,238,.55), rgba(168,139,250,.35), rgba(244,114,182,.45));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events:none;
+  }
+  .gradient-text {
+    background: linear-gradient(120deg, #fff 0%, #c4cef7 40%, #22d3ee 70%, #a78bfa 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  .ring-dot::before{
+    content:""; display:inline-block; width:.5rem; height:.5rem; border-radius:9999px;
+    background:#22d3ee; box-shadow:0 0 0 4px rgba(34,211,238,.18); margin-right:.5rem;
+    vertical-align:middle;
+  }
+  .q-num {
+    background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(168,139,250,.18));
+    border: 1px solid rgba(255,255,255,.1);
+    color: #cbd5ff;
+  }
+  *::-webkit-scrollbar{width:8px;height:8px}
+  *::-webkit-scrollbar-track{background:transparent}
+  *::-webkit-scrollbar-thumb{background:#272e4a;border-radius:9999px}
+  *::-webkit-scrollbar-thumb:hover{background:#3a4570}
+  .halo {
+    background: radial-gradient(closest-side, rgba(34,211,238,.35), transparent 70%);
+    filter: blur(40px);
+  }
+  .chart-wrap { position: relative; width: 100%; }
+  .chart-wrap canvas { width: 100% !important; height: 100% !important; }
+</style>
+</head>
+
+<body class="font-sans antialiased">
+
+<header class="fixed top-0 inset-x-0 z-40">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav class="mt-3 glass rounded-2xl px-4 sm:px-5 py-2.5 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 group">
+        <span class="relative inline-flex items-center justify-center w-8 h-8 rounded-lg bg-ink-800 neon-border">
+          <span class="text-[10px] font-mono font-bold text-neon-cyan">DF</span>
+        </span>
+        <span class="text-sm sm:text-base font-semibold tracking-tight">Infrações DF <span class="text-white/40">·</span> análise</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 text-xs text-white/60">
+        <a href="#q1" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 transition">Rodovias</a>
+        <a href="#q2" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 transition">Meses</a>
+        <a href="#q3" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 transition">Dias</a>
+        <a href="#q5" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 transition">Tipos</a>
+        <a href="#q7" class="px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 transition">Veículos</a>
+      </div>
+      <a id="nav-notebook" href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/blob/master/trabalho_final/analise.ipynb"
+         class="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 transition flex items-center gap-1.5">
+        Notebook
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section id="top" class="relative min-h-[100svh] grid-bg pt-32 sm:pt-40 pb-20 overflow-hidden">
+  <div class="absolute inset-x-0 top-40 mx-auto w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] halo opacity-70 pointer-events-none"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+    <div class="flex items-center gap-2 text-xs text-white/60 font-mono mb-5 animate-fade-up">
+      <span class="ring-dot"></span>
+      INTRODUÇÃO À CIÊNCIA DE DADOS · PROJETO FINAL
+    </div>
+
+    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.02] max-w-5xl animate-fade-up" style="animation-delay:.1s">
+      <span class="gradient-text">Infrações de Trânsito</span> nas<br class="hidden sm:block" />
+      rodovias do Distrito Federal.
+    </h1>
+
+    <p class="mt-6 text-base sm:text-lg text-white/65 max-w-2xl leading-relaxed animate-fade-up" style="animation-delay:.2s">
+      Análise exploratória da base <span class="font-mono text-white/80">dados_2025.parquet</span> —
+      <span class="text-white font-semibold">789 mil</span> registros,
+      buscando responder <b>onde, quando e como</b> os motoristas mais desrespeitam o CTB no DF.
+    </p>
+
+    <div class="mt-8 flex flex-wrap items-center gap-3 animate-fade-up" style="animation-delay:.3s">
+      <a href="#q1" class="group px-5 py-3 rounded-xl bg-gradient-to-r from-neon-cyan/90 to-neon-violet/90 text-ink-950 font-semibold text-sm hover:scale-[1.02] transition shadow-lg shadow-neon-cyan/20">
+        Começar análise
+        <span class="inline-block transition group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+
+    <div class="mt-14 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 animate-fade-up" style="animation-delay:.4s">
+      <div class="glass rounded-2xl p-4 sm:p-5 relative overflow-hidden">
+        <div class="text-[11px] uppercase tracking-wider text-white/50 font-mono">Infrações</div>
+        <div class="mt-1 text-2xl sm:text-3xl font-bold gradient-text">788,877</div>
+      </div>
+      <div class="glass rounded-2xl p-4 sm:p-5 relative overflow-hidden">
+        <div class="text-[11px] uppercase tracking-wider text-white/50 font-mono">Rodovias únicas</div>
+        <div class="mt-1 text-2xl sm:text-3xl font-bold gradient-text">124</div>
+      </div>
+      <div class="glass rounded-2xl p-4 sm:p-5 relative overflow-hidden">
+        <div class="text-[11px] uppercase tracking-wider text-white/50 font-mono">Tipos Violados</div>
+        <div class="mt-1 text-2xl sm:text-3xl font-bold gradient-text">249</div>
+      </div>
+      <div class="glass rounded-2xl p-4 sm:p-5 relative overflow-hidden">
+        <div class="text-[11px] uppercase tracking-wider text-white/50 font-mono">Arrecadação Est.</div>
+        <div class="mt-1 text-2xl sm:text-3xl font-bold gradient-text">R$ 132.3 mi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/30 text-xs font-mono animate-pulse-soft">
+    role para começar ↓
+  </div>
+</section>
+
+<main class="relative">
+
+  <!-- Q1 -->
+  <section id="q1" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-5 gap-10 items-center">
+      <div data-aos="fade-right" class="lg:col-span-2 space-y-5">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          ONDE: RODOVIAS
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Em quais <span class="gradient-text">rodovias</span> as infrações se concentram?</h2>
+        <p class="text-white/65 leading-relaxed">
+          <span class="text-white font-semibold">O que mostra:</span> As infrações são fortemente concentradas em poucas vias. A <b>DF-075 (EPNB)</b> sozinha é responsável pelo maior volume disparado.
+        </p>
+        <p class="text-white/65 leading-relaxed">
+          O pódio é completado por vias radiais extremamente movimentadas como a <b>DF-001 (EPCT)</b> e a <b>BR-020</b>, evidenciando que o risco se aloca onde o fluxo é maior.
+        </p>
+      </div>
+      <div data-aos="fade-left" class="lg:col-span-3">
+        <div class="glass neon-border rounded-3xl p-5 sm:p-7">
+          <div class="chart-wrap" style="height:400px"><canvas id="chartQ1"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q2 -->
+  <section id="q2" class="py-20 sm:py-28 bg-gradient-to-b from-transparent via-ink-900/40 to-transparent">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-5 gap-10 items-center">
+      <div data-aos="fade-up" class="lg:col-span-3 order-2 lg:order-1">
+        <div class="glass neon-border rounded-3xl p-5 sm:p-7">
+          <div class="chart-wrap" style="height:360px"><canvas id="chartQ2"></canvas></div>
+        </div>
+      </div>
+      <div data-aos="fade-left" class="lg:col-span-2 space-y-5 order-1 lg:order-2">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          QUANDO: MÊS
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Existe sazonalidade ao longo do <span class="gradient-text">ano</span>?</h2>
+        <p class="text-white/65 leading-relaxed">
+          O volume de infrações <b>varia muito</b>, mas não apresenta uma tendência natural simples. Em vez de sazonalidade de trânsito, as oscilações bruscas indicam <b>eventos externos</b> (ativação/desativação de radares, greves, ou campanhas ostensivas de fiscalização).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q3 -->
+  <section id="q3" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-5 gap-10 items-center">
+      <div data-aos="fade-right" class="lg:col-span-2 space-y-5">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          QUANDO: DIAS
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">O perigo mora no <span class="gradient-text">fim de semana</span>?</h2>
+        <p class="text-white/65 leading-relaxed">
+          <b>Pelo contrário.</b> Os dias úteis dominam os registros, com uma elevação forte chegando na <b>sexta-feira</b>.
+        </p>
+        <p class="text-white/65 leading-relaxed">
+          No domingo, o número de infrações despenca, comprovando que o comportamento infrator no DF é guiado pela <b>rotina diária e pelo trânsito pendular</b> (ir e vir do trabalho), e não pelas saídas de lazer.
+        </p>
+      </div>
+      <div data-aos="fade-left" class="lg:col-span-3">
+        <div class="glass neon-border rounded-3xl p-5 sm:p-7">
+          <div class="chart-wrap" style="height:360px"><canvas id="chartQ3"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q4 -->
+  <section id="q4" class="py-20 sm:py-28 bg-gradient-to-b from-transparent via-ink-900/40 to-transparent">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+      <div data-aos="fade-up" class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          QUANDO: HORAS
+        </div>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">Em quais <span class="gradient-text">horários</span> as vias são mais perigosas?</h2>
+        <p class="mt-4 text-white/65 leading-relaxed">
+          A curva segue perfeitamente os picos de trânsito: há uma elevação forte na ida ao trabalho <b>(7h às 8h)</b> e um vale no meio do dia. Porém, o pico absoluto ocorre na volta para casa <b>(16h às 18h)</b>. A madrugada registra o menor volume bruto de infrações.
+        </p>
+      </div>
+      <div data-aos="fade-up" class="glass neon-border rounded-3xl p-5 sm:p-7">
+        <div class="chart-wrap" style="height:420px"><canvas id="chartQ4"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q5 -->
+  <section id="q5" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-5 gap-10 items-center">
+      <div data-aos="fade-right" class="lg:col-span-3">
+        <div class="glass neon-border rounded-3xl p-5 sm:p-7">
+          <div class="chart-wrap" style="height:500px"><canvas id="chartQ5"></canvas></div>
+        </div>
+      </div>
+      <div data-aos="fade-left" class="lg:col-span-2 space-y-5">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          COMO: TIPOS DE INFRAÇÃO
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Qual o comportamento mais <span class="gradient-text">frequente</span>?</h2>
+        <p class="text-white/65 leading-relaxed">
+          O gráfico ao lado mostra o Top 15. O <b>excesso de velocidade</b> (transitar até 20% acima do limite) é o líder inquestionável e isolado.
+        </p>
+        <p class="text-white/65 leading-relaxed">
+          De longe, o pé pesado é o que mais gera multas no DF, seguido por excessos maiores de velocidade e invasão de faixas exclusivas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q6 & Q7 -->
+  <section id="q6" class="py-20 sm:py-28 bg-gradient-to-b from-transparent via-ink-900/40 to-transparent">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10">
+      
+      <div data-aos="fade-up" class="space-y-6">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">GRAVIDADE</div>
+        <h2 class="text-3xl font-bold">Qual a gravidade típica?</h2>
+        <p class="text-white/65">A maioria das autuações não é gravíssima. A grande parcela se concentra na infração <b>Média</b>, diretamente atrelada ao excesso de velocidade leve (visto acima). Infrações gravíssimas existem, mas são minoria em volume bruto.</p>
+        <div class="glass neon-border rounded-3xl p-5" style="height:350px">
+          <canvas id="chartQ6"></canvas>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="100" class="space-y-6">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">VEÍCULOS</div>
+        <h2 class="text-3xl font-bold">Quem comete?</h2>
+        <p class="text-white/65">O <b>automóvel</b> é, com enorme folga, o tipo de veículo com mais autuações, seguido pela motocicleta e caminhonetes. Obviamente, isso reflete muito mais o tamanho da frota dessas categorias do que necessariamente o perfil de risco de um motorista.</p>
+        <div class="glass neon-border rounded-3xl p-5" style="height:350px">
+          <canvas id="chartQ7"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Q8 -->
+  <section id="q8" class="py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+      <div data-aos="fade-up" class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          QUANTO CUSTA
+        </div>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-bold tracking-tight">O que <span class="gradient-text">pagam</span> os infratores?</h2>
+        <p class="mt-4 text-white/65 leading-relaxed">
+          Como os valores são estritamente tabelados pelo CTB, vemos picos exatos nos valores das multas. A multa de <b>R$ 130,16 (média)</b> responde por mais de 50% de todas as autuações. Porém, as poucas multas multiplicadas (R$ 880 e R$ 1.467) têm um impacto imenso na média geral, puxando-a para cima.
+        </p>
+      </div>
+      <div data-aos="fade-up" class="glass neon-border rounded-3xl p-5 sm:p-7">
+        <div class="chart-wrap" style="height:420px"><canvas id="chartQ8"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSÃO -->
+  <section id="conclusao" class="py-20 sm:py-28 bg-gradient-to-b from-transparent to-ink-900/80">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div data-aos="fade-up" class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 q-num text-xs font-mono px-3 py-1 rounded-full">
+          CONCLUSÃO
+        </div>
+        <h2 class="mt-3 text-3xl sm:text-5xl font-bold tracking-tight">O perfil da <span class="gradient-text">infração do DF</span>.</h2>
+        <p class="mt-4 text-white/65 leading-relaxed text-lg">
+          O infrator típico do Distrito Federal não é alguém em momento de lazer cometendo uma loucura. É um condutor no caminho para o trabalho (<b>dias úteis, horário de pico</b>), em corredores conhecidos (<b>DF-075, DF-001</b>), que cruza o limite em uma distração (<b>até 20% do limite, multa média</b>).
+        </p>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div data-aos="fade-up" class="glass rounded-2xl p-6">
+          <div class="text-xs font-mono uppercase tracking-wider text-neon-cyan">Concentração</div>
+          <p class="mt-2 text-white/85">Poucas vias respondem pela maior parte. Políticas de educação devem focar nos corredores como a EPNB (DF-075).</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="80" class="glass rounded-2xl p-6">
+          <div class="text-xs font-mono uppercase tracking-wider text-neon-violet">Rotina</div>
+          <p class="mt-2 text-white/85">O perigo mora na ida e volta ao trabalho. Campanhas devem focar na pressa diária, e não no fim de semana.</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="160" class="glass rounded-2xl p-6">
+          <div class="text-xs font-mono uppercase tracking-wider text-neon-magenta">Velocidade Leve</div>
+          <p class="mt-2 text-white/85">Embora a imprudência extrema chame atenção nas mídias, o "arroz com feijão" do Detran é a multa leve/média de radar.</p>
+        </div>
+      </div>
+      
+      <div class="mt-14 glass neon-border rounded-3xl p-7 sm:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+        <div>
+          <div class="text-xs uppercase tracking-wider text-white/50 font-mono">Quer ver o código completo?</div>
+          <div class="mt-1 text-xl sm:text-2xl font-semibold">Toda a análise feita em Python / Pandas.</div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://github.com/Kauan9r7/Ciencias_de_Dados_projetos/blob/master/trabalho_final/analise.ipynb"
+             class="px-5 py-3 rounded-xl bg-gradient-to-r from-neon-cyan/90 to-neon-violet/90 text-ink-950 font-semibold text-sm hover:scale-[1.02] transition shadow-lg shadow-neon-cyan/20">
+             Abrir notebook →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t border-white/5 py-10 text-center text-xs text-white/40">
+  <div class="mx-auto max-w-7xl px-4">
+    Projeto Final · <span class="font-mono">Introdução à Ciência de Dados</span> · Dados Abertos (DF) · Criado com Tailwind e Chart.js
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+window.DATA = {"meta": {"total_infracoes": 788877, "rodovias": 124, "tipos_infracao": 249, "total_multas_rs": 132278375.92}, "q1": [{"rodovia": "df-075", "count": 195289}, {"rodovia": "df-001", "count": 146006}, {"rodovia": "df-003", "count": 68463}, {"rodovia": "df-085", "count": 60584}, {"rodovia": "df-005", "count": 35337}, {"rodovia": "df-079", "count": 30973}, {"rodovia": "df-150", "count": 30498}, {"rodovia": "df-025", "count": 26396}, {"rodovia": "df-004", "count": 24636}, {"rodovia": "df-290", "count": 24528}], "q2": [{"mes": 1, "count": 59850}, {"mes": 2, "count": 57503}, {"mes": 3, "count": 59034}, {"mes": 4, "count": 35342}, {"mes": 5, "count": 45677}, {"mes": 6, "count": 63049}, {"mes": 7, "count": 92059}, {"mes": 8, "count": 79133}, {"mes": 9, "count": 82944}, {"mes": 10, "count": 72824}, {"mes": 11, "count": 67908}, {"mes": 12, "count": 73554}], "q3": [{"dia": "segunda-feira", "count": 124206}, {"dia": "terca-feira", "count": 122597}, {"dia": "quarta-feira", "count": 124675}, {"dia": "quinta-feira", "count": 127133}, {"dia": "sexta-feira", "count": 128913}, {"dia": "sabado", "count": 84146}, {"dia": "domingo", "count": 77207}], "q4": [{"hora": 0, "count": 16208}, {"hora": 1, "count": 10688}, {"hora": 2, "count": 7976}, {"hora": 3, "count": 7246}, {"hora": 4, "count": 8642}, {"hora": 5, "count": 12827}, {"hora": 6, "count": 20296}, {"hora": 7, "count": 31146}, {"hora": 8, "count": 42819}, {"hora": 9, "count": 53603}, {"hora": 10, "count": 50040}, {"hora": 11, "count": 40512}, {"hora": 12, "count": 37113}, {"hora": 13, "count": 37347}, {"hora": 14, "count": 41485}, {"hora": 15, "count": 49218}, {"hora": 16, "count": 67778}, {"hora": 17, "count": 68961}, {"hora": 18, "count": 44372}, {"hora": 19, "count": 36184}, {"hora": 20, "count": 29916}, {"hora": 21, "count": 27403}, {"hora": 22, "count": 25247}, {"hora": 23, "count": 21850}], "q5": [{"descricao": "transitar em velocidade superior a maxima permitida em ate 2...", "count": 373575}, {"descricao": "transitar na faixa/pista da direita regul circulacao exclusi...", "count": 164864}, {"descricao": "transitar em velocidade superior a maxima permitida em mais ...", "count": 39796}, {"descricao": "deixar de indicar c/ antec, med gesto de braco/luz indicador...", "count": 27248}, {"descricao": "conduzir veic c/ defeito no sist de iluminacao, sinaliz ou l...", "count": 23141}, {"descricao": "dirigir veiculo manuseando telefone celular", "count": 18548}, {"descricao": "deixar o condutor de usar o cinto seguranca", "count": 17839}, {"descricao": "conduzir o veiculo registrado que nao esteja devidamente lic...", "count": 16407}, {"descricao": "deixar de indicar c/ antec, med gesto de braco/luz indicador...", "count": 9694}, {"descricao": "dirigir veiculo segurando telefone celular", "count": 8487}, {"descricao": "transitar na faixa ou via exclusiva regulam. p/ transp. publ...", "count": 8212}, {"descricao": "transitar na faixa/pista da esquerda regul circulacao exclus...", "count": 7166}, {"descricao": "transitar com o veiculo em marcas de canalizacao", "count": 6161}, {"descricao": "deixar o passageiro de usar o cinto seguranca", "count": 5622}, {"descricao": "transitar com o veiculo em acostamentos", "count": 5484}], "q6": [{"gravidade": "leve", "count": 166196}, {"gravidade": "media", "count": 413372}, {"gravidade": "grave", "count": 125689}, {"gravidade": "gravissima", "count": 83620}], "q7": [{"veiculo": "automovel", "count": 494495}, {"veiculo": "caminhonete", "count": 83314}, {"veiculo": "motocicleta", "count": 75948}, {"veiculo": "camioneta", "count": 49744}, {"veiculo": "utilitario", "count": 33137}, {"veiculo": "caminhao", "count": 19379}, {"veiculo": "semi-reboque", "count": 13830}, {"veiculo": "caminhao trator", "count": 7248}], "q8": [{"valor": 88.38, "count": 166196}, {"valor": 130.16, "count": 413372}, {"valor": 195.23, "count": 125689}, {"valor": 293.47, "count": 62750}, {"valor": 586.94, "count": 241}, {"valor": 880.41, "count": 16326}, {"valor": 1467.35, "count": 4301}, {"valor": 2934.7, "count": 2}]};
+
+// Setup global Chart.js defaults
+Chart.defaults.color = 'rgba(255, 255, 255, 0.5)';
+Chart.defaults.font.family = '"Space Grotesk", sans-serif';
+const neonCyan = '#22d3ee';
+const neonViolet = '#a78bfa';
+
+function initCharts() {
+  // Q1: Rodovias (Bar horizontal)
+  new Chart(document.getElementById('chartQ1'), {
+    type: 'bar',
+    data: {
+      labels: window.DATA.q1.map(d => d.rodovia),
+      datasets: [{
+        data: window.DATA.q1.map(d => d.count),
+        backgroundColor: neonCyan + '40',
+        borderColor: neonCyan,
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: 'rgba(255,255,255,0.05)' } }, y: { grid: { display: false } } }
+    }
+  });
+
+  // Q2: Meses (Line)
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  new Chart(document.getElementById('chartQ2'), {
+    type: 'line',
+    data: {
+      labels: window.DATA.q2.map(d => meses[d.mes - 1]),
+      datasets: [{
+        data: window.DATA.q2.map(d => d.count),
+        borderColor: neonViolet,
+        backgroundColor: neonViolet + '20',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+    }
+  });
+
+  // Q3: Dias da Semana (Bar)
+  const diasLabel = window.DATA.q3.map(d => d.dia.replace('-feira',''));
+  const bgDias = window.DATA.q3.map(d => d.dia === 'sabado' || d.dia === 'domingo' ? neonViolet+'40' : neonCyan+'40');
+  const borderDias = window.DATA.q3.map(d => d.dia === 'sabado' || d.dia === 'domingo' ? neonViolet : neonCyan);
+  
+  new Chart(document.getElementById('chartQ3'), {
+    type: 'bar',
+    data: {
+      labels: diasLabel,
+      datasets: [{
+        data: window.DATA.q3.map(d => d.count),
+        backgroundColor: bgDias,
+        borderColor: borderDias,
+        borderWidth: 1,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+    }
+  });
+
+  // Q4: Horas (Area/Line)
+  new Chart(document.getElementById('chartQ4'), {
+    type: 'line',
+    data: {
+      labels: window.DATA.q4.map(d => d.hora + 'h'),
+      datasets: [{
+        data: window.DATA.q4.map(d => d.count),
+        borderColor: '#f472b6',
+        backgroundColor: '#f472b630',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+    }
+  });
+
+  // Q5: Tipo Infracao (Bar Horizontal Top 15)
+  new Chart(document.getElementById('chartQ5'), {
+    type: 'bar',
+    data: {
+      labels: window.DATA.q5.map(d => d.descricao),
+      datasets: [{
+        data: window.DATA.q5.map(d => d.count),
+        backgroundColor: '#a3e63540',
+        borderColor: '#a3e635',
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: { 
+        x: { grid: { color: 'rgba(255,255,255,0.05)' } }, 
+        y: { grid: { display: false }, ticks: { font: { size: 10 } } } 
+      }
+    }
+  });
+
+  // Q6: Gravidade (Doughnut)
+  new Chart(document.getElementById('chartQ6'), {
+    type: 'doughnut',
+    data: {
+      labels: window.DATA.q6.map(d => d.gravidade.toUpperCase()),
+      datasets: [{
+        data: window.DATA.q6.map(d => d.count),
+        backgroundColor: ['#22d3ee', '#fbbf24', '#f472b6', '#a78bfa'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'right', labels: { color: '#e7e9f3' } } },
+      cutout: '70%'
+    }
+  });
+
+  // Q7: Veiculos (Bar)
+  new Chart(document.getElementById('chartQ7'), {
+    type: 'bar',
+    data: {
+      labels: window.DATA.q7.map(d => d.veiculo),
+      datasets: [{
+        data: window.DATA.q7.map(d => d.count),
+        backgroundColor: '#8b5cf660',
+        borderColor: '#8b5cf6',
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+    }
+  });
+
+  // Q8: Valores Multa (Bar)
+  new Chart(document.getElementById('chartQ8'), {
+    type: 'bar',
+    data: {
+      labels: window.DATA.q8.map(d => 'R$ ' + d.valor.toFixed(2).replace('.', ',')),
+      datasets: [{
+        data: window.DATA.q8.map(d => d.count),
+        backgroundColor: '#fbbf2440',
+        borderColor: '#fbbf24',
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+    }
+  });
+}
+
+AOS.init({ duration: 800, once: true, offset: 50 });
+document.addEventListener('DOMContentLoaded', initCharts);
+</script>
+</body>
+</html>

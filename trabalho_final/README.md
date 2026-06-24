@@ -2,6 +2,13 @@
 
 Projeto final ou parte da disciplina de **Introdução à Ciência de Dados**, focado na extração, limpeza, padronização e estruturação de dados governamentais abertos sobre infrações de trânsito.
 
+
+## 🌐 Apresentação Interativa
+
+Este projeto possui uma página web iterativa (dashboard) rodando no GitHub Pages:
+**[Acessar Apresentação: Infrações DF 2025](https://kauan9r7.github.io/Ciencias_de_Dados_projetos/trabalho-final.html)**
+
+---
 Esta pasta contém os seguintes arquivos:
 
 - `README.md`
